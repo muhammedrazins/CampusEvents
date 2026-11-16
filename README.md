@@ -5,7 +5,7 @@ A full-stack, responsive web application built for managing university technical
 
 🚀 Key Features
 
-Live Event Catalog (index.php): Displays upcoming technical workshops with real-time seat tracking calculated dynamically via MySQL aggregation (LEFT JOIN & COUNT()). Automatically switches to a disabled "SOLD OUT" state when capacity is reached.
+Live Event Catalogue (index.php): Displays upcoming technical workshops with real-time seat tracking calculated dynamically via MySQL aggregation (LEFT JOIN & COUNT()). Automatically switches to a disabled "SOLD OUT" state when capacity is reached.
 
 Server-Side PHP Validation (register.php): Validates all form inputs securely on the server (regex checks for Name, Roll No, and Phone; email filter; department whitelist; global unique roll number enforcement; and live seat capacity verification).
 
@@ -17,22 +17,21 @@ Admin Dashboard & CRUD (admin.php): A session-guarded management panel allowing 
 
 🛠️ Technology Stack
 
-Frontend: Semantic HTML5 (register.html, about.html), CSS3 (style.css with Flexbox, CSS Grid, status badges, and print media rules), Vanilla JavaScript (Fetch API for dropdown synchronization).
+Frontend: Semantic HTML5 (register.html, about.html), CSS3 (style.css with Flexbox, CSS Grid, status badges, and print media rules), Vanilla JavaScript (Fetch API for dropdown synchronisation).
 
 Backend: PHP 8.x procedural and modular scripts, native session management ($_SESSION), password_verify() with Bcrypt.
 
-Database: MySQL / MariaDB via PHP mysqli extension with parameterized statements (prepare() / bind_param()) to prevent SQL Injection.
+Database: MySQL / MariaDB via PHP mysqli extension with parameterised statements (prepare() / bind_param()) to prevent SQL Injection.
 
 Local Environment: XAMPP (Apache, PHP, MySQL, phpMyAdmin).
 
 📂 Project Directory Structure
 
-event_portal/
-│
+event_portal
 ├── database.sql        # MySQL database schema and sample data
 ├── db.php              # MySQL connection & auto-setup handler
 ├── style.css           # Unified responsive stylesheet
-├── index.php           # Page 1: Live Event Catalog with seat counters
+├── index.php           # Page 1: Live Event Catalogue with seat counters
 ├── about.html          # Informational guidelines & rules page
 ├── register.html       # Standalone HTML registration form
 ├── register.php        # Server-side PHP validation & MySQL insertion
@@ -66,8 +65,8 @@ Default Admin Credentials: Username: admin | Password: password
 
 Bcrypt Password Hashing: Administrator passwords are stored securely using PHP's native password_hash() and verified via password_verify().
 
-Prepared Statements: All database queries utilize parameterized prepared statements to neutralize SQL Injection vulnerabilities.
+Prepared Statements: All database queries utilize parameterized prepared statements to neutralise SQL Injection vulnerabilities.
 
-Input Sanitization: User inputs are sanitized using htmlspecialchars(), stripslashes(), and trim() to prevent Cross-Site Scripting (XSS).
+Input Sanitisation: User inputs are sanitised using htmlspecialchars(), stripslashes(), and trim() to prevent Cross-Site Scripting (XSS).
 
-Strict Session Guard: Unauthorized users attempting to access admin.php directly via URL are immediately intercepted and redirected to login.php.
+Strict Session Guard: Unauthorised users attempting to access admin.php directly via URL are immediately intercepted and redirected to login.php.
