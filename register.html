@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Registration - CampusEvents</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>CampusEvents</h2>
+    <div>
+        <a href="index.php">Events Catalog</a>
+        <a href="about.html">Guidelines</a>
+        <a href="register.html" class="active">Register Now</a>
+        <a href="ticket.php">Find My Pass</a>
+        <a href="login.php">Admin Login</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="form-box">
+        <h2 style="margin-bottom: 0.5rem;">Student Event Registration</h2>
+        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1.2rem;">
+            Fill out your details below. Data is submitted to <code>register.php</code> for server-side validation and MySQL storage.
+        </p>
+
+        <form method="POST" action="register.php">
+            <div class="form-group">
+                <label for="event_id">Select Workshop *</label>
+                <select name="event_id" id="event_id" required>
+                    <option value="">-- Choose an Event --</option>
+                    <option value="1">Full-Stack Web Development Bootcamp</option>
+                    <option value="2">Embedded Systems & IoT with Arduino</option>
+                    <option value="3">Machine Learning & Computer Vision</option>
+                    <option value="4">Cybersecurity & Network Defense Workshop</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="student_name">Full Name *</label>
+                <input type="text" name="student_name" id="student_name" placeholder="e.g. Rahul Nair" required>
+            </div>
+
+            <div class="form-group">
+                <label for="roll_no">University Roll Number *</label>
+                <input type="text" name="roll_no" id="roll_no" placeholder="e.g. IT2024042" required>
+            </div>
+
+            <div class="form-group">
+                <label for="department">Department *</label>
+                <select name="department" id="department" required>
+                    <option value="">-- Select Department --</option>
+                    <option value="IT">IT</option>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="EEE">EEE</option>
+                    <option value="MECH">MECH</option>
+                    <option value="CIVIL">CIVIL</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" name="email" id="email" placeholder="student@university.edu" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">10-Digit Mobile Number *</label>
+                <input type="text" name="phone" id="phone" maxlength="10" placeholder="9876543210" required>
+            </div>
+
+            <button type="submit" class="btn" style="width: 100%;">Complete Registration</button>
+        </form>
+    </div>
+</div>
+
+<script>
+// Automatically load the latest events created by Admin from the database
+const urlParams = new URLSearchParams(window.location.search);
+const preselectedId = urlParams.get('event_id');
+
+fetch('events_json.php')
+    .then(response => response.json())
+    .then(events => {
+        const select = document.getElementById('event_id');
+        select.innerHTML = '<option value="">-- Choose an Event --</option>';
+        events.forEach(ev => {
+            const opt = document.createElement('option');
+            opt.value = ev.event_id;
+            if (ev.remaining <= 0) {
+                opt.textContent = `${ev.title} (${ev.formatted_date}) - SOLD OUT`;
+                opt.disabled = true;
+            } else {
+                opt.textContent = `${ev.title} (${ev.formatted_date}) - ${ev.remaining} seats left`;
+            }
+            if (preselectedId && String(preselectedId) === String(ev.event_id)) {
+                opt.selected = true;
+            }
+            select.appendChild(opt);
+        });
+    })
+    .catch(() => {
+        if (preselectedId) {
+            document.getElementById('event_id').value = preselectedId;
+        }
+    });
+</script>
+
+</body>
+</html>
